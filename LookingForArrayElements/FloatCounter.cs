@@ -13,8 +13,67 @@ namespace LookingForArrayElements
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
         public static int GetFloatsCount(float[]? arrayToSearch, float[]? rangeStart, float[]? rangeEnd)
         {
-            // TODO #3. Implement the method using recursion.
-            throw new NotImplementedException();
+            return CountElements(arrayToSearch!, rangeStart!, rangeEnd);
+
+            static int CountElements(float[] arrayToSearch, float[] rangeStart, float[]? rangeEnd)
+            {
+                if (arrayToSearch == null)
+                {
+                    throw new ArgumentNullException(nameof(arrayToSearch), "arrayToSearch is empty");
+                }
+
+                if (rangeStart == null)
+                {
+                    throw new ArgumentNullException(nameof(rangeStart), "rangeStart is empty");
+                }
+
+                if (rangeEnd == null)
+                {
+                    throw new ArgumentNullException(nameof(rangeEnd), "rangeEnd is empty");
+                }
+
+                if (rangeStart.Length != rangeEnd.Length)
+                {
+                    throw new ArgumentException("The length of the rangeStart and rangeEnd arrays must be equal.");
+                }
+
+                if (rangeStart.Length == 0)
+                {
+                    return 0;
+                }
+
+                if (rangeEnd.Length == 0)
+                {
+                    return 0;
+                }
+
+                if (rangeStart[0] > rangeEnd[0])
+                {
+                    throw new ArgumentException("The rangeStart value must be less than or equal to the rangeEnd value.");
+                }
+
+                if (arrayToSearch.Length == 0)
+                {
+                    return 0;
+                }
+
+                if (arrayToSearch[0] >= rangeStart[0] && arrayToSearch[0] <= rangeEnd[0])
+                {
+                    return 1 + CountElements(arrayToSearch[1..], rangeStart, rangeEnd);
+                }
+
+                if (arrayToSearch[0] > rangeEnd[0])
+                {
+                    return CountElements(arrayToSearch[1..], rangeStart[1..], rangeEnd[1..]);
+                }
+
+                if (arrayToSearch[0] < rangeStart[0])
+                {
+                    return CountElements(arrayToSearch[1..], rangeStart, rangeEnd);
+                }
+
+                return 0;
+            }
         }
 
         /// <summary>
@@ -28,8 +87,82 @@ namespace LookingForArrayElements
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
         public static int GetFloatsCount(float[]? arrayToSearch, float[]? rangeStart, float[]? rangeEnd, int startIndex, int count)
         {
-            // TODO #4. Implement the method using recursion.
-            throw new NotImplementedException();
+            return CountElements(arrayToSearch!, rangeStart!, rangeEnd, startIndex, count);
+
+            static int CountElements(float[] arrayToSearch, float[] rangeStart, float[]? rangeEnd, int startIndex, int count)
+            {
+                if (arrayToSearch == null)
+                {
+                    throw new ArgumentNullException(nameof(arrayToSearch), "arrayToSearch is empty");
+                }
+
+                if (rangeStart == null)
+                {
+                    throw new ArgumentNullException(nameof(rangeStart), "rangeStart is empty");
+                }
+
+                if (rangeEnd == null)
+                {
+                    throw new ArgumentNullException(nameof(rangeEnd), "rangeEnd is empty");
+                }
+
+                if (rangeStart.Length != rangeEnd.Length)
+                {
+                    throw new ArgumentException("The length of the rangeStart and rangeEnd arrays must be equal.");
+                }
+
+                if (startIndex < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(startIndex), "startIndex is less than 0");
+                }
+
+                if (rangeStart.Length == 0)
+                {
+                    return 0;
+                }
+
+                if (rangeEnd.Length == 0)
+                {
+                    return 0;
+                }
+
+                if (rangeStart[0] > rangeEnd[0])
+                {
+                    throw new ArgumentException("The rangeStart value must be less than or equal to the rangeEnd value.");
+                }
+
+                if (count + startIndex > arrayToSearch.Length)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(count), "count + startIndex is greater than arrayToSearch.Length");
+                }
+
+                if (count < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(count), "count is less than zero");
+                }
+
+                if (count == 0)
+                {
+                    return 0;
+                }
+
+                if (arrayToSearch[startIndex] >= rangeStart[0] && arrayToSearch[startIndex] <= rangeEnd[0])
+                {
+                    return 1 + CountElements(arrayToSearch, rangeStart, rangeEnd, startIndex + 1, count - 1);
+                }
+
+                if (arrayToSearch[startIndex] > rangeEnd[0])
+                {
+                    return CountElements(arrayToSearch, rangeStart[1..], rangeEnd[1..], startIndex, count);
+                }
+
+                if (arrayToSearch[startIndex] < rangeStart[0])
+                {
+                    return CountElements(arrayToSearch, rangeStart, rangeEnd, startIndex + 1, count - 1);
+                }
+
+                return 0;
+            }
         }
     }
 }
