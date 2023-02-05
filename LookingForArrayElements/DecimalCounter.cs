@@ -33,7 +33,7 @@ namespace LookingForArrayElements
         /// <param name="startIndex">The zero-based starting index of the search.</param>
         /// <param name="count">The number of elements in the section to search.</param>
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
-        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[]?[] ranges, int startIndex, int count)
+        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[][]? ranges, int startIndex, int count)
         {
             if (arrayToSearch is null)
             {
