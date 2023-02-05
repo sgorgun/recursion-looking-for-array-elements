@@ -17,6 +17,11 @@ namespace LookingForArrayElements
                 throw new ArgumentNullException(nameof(arrayToSearch), "The array to search cannot be null.");
             }
 
+            if (ranges is null)
+            {
+                throw new ArgumentNullException(nameof(ranges), "The array to search cannot be null.");
+            }
+
             return GetDecimalsCount(arrayToSearch, ranges, 0, arrayToSearch.Length);
         }
 
@@ -28,7 +33,7 @@ namespace LookingForArrayElements
         /// <param name="startIndex">The zero-based starting index of the search.</param>
         /// <param name="count">The number of elements in the section to search.</param>
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
-        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[][]? ranges, int startIndex, int count)
+        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[]?[] ranges, int startIndex, int count)
         {
             if (arrayToSearch is null)
             {
@@ -88,7 +93,7 @@ namespace LookingForArrayElements
 
         public static int GetIsNumberInRangesRecursive(decimal[] arrayToSearch, decimal[][] ranges, int startIndex, int rangeIndex)
         {
-            return rangeIndex < ranges.Length && ranges[rangeIndex]?.Length > 0 && arrayToSearch[startIndex] >= ranges[rangeIndex][0] && arrayToSearch[startIndex] <= ranges[rangeIndex][1]
+            return rangeIndex < ranges.Length && ranges[rangeIndex].Length > 0 && arrayToSearch[startIndex] >= ranges[rangeIndex][0] && arrayToSearch[startIndex] <= ranges[rangeIndex][1]
                 ? 1
                 : rangeIndex == ranges.Length - 1
                     ? 0
