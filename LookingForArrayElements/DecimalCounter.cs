@@ -93,11 +93,13 @@ namespace LookingForArrayElements
 
         public static int GetIsNumberInRangesRecursive(decimal[] arrayToSearch, decimal[][] ranges, int startIndex, int rangeIndex)
         {
+#pragma warning disable S3358 // Ternary operators should not be nested
             return rangeIndex < ranges.Length && ranges[rangeIndex].Length > 0 && arrayToSearch[startIndex] >= ranges[rangeIndex][0] && arrayToSearch[startIndex] <= ranges[rangeIndex][1]
                 ? 1
                 : rangeIndex == ranges.Length - 1
                     ? 0
                     : GetIsNumberInRangesRecursive(arrayToSearch, ranges, startIndex, rangeIndex + 1);
+#pragma warning restore S3358 // Ternary operators should not be nested
         }
 
         public static int GetCountRecursive(decimal[] arrayToSearch, decimal[][] ranges, int startIndex, int count, int i, int totalCount)
