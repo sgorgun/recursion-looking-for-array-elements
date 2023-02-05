@@ -12,7 +12,6 @@ namespace LookingForArrayElements
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
         public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[]?[]? ranges)
         {
-            //Implement the method using recursion.
             if (arrayToSearch is null)
             {
                 throw new ArgumentNullException(nameof(arrayToSearch), "The array to search cannot be null.");
@@ -29,10 +28,8 @@ namespace LookingForArrayElements
         /// <param name="startIndex">The zero-based starting index of the search.</param>
         /// <param name="count">The number of elements in the section to search.</param>
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
-        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[]?[]? ranges, int startIndex, int count)
+        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[][]? ranges, int startIndex, int count)
         {
-            // Implement the method using recursion. The method should call itself. DON'T use loops.
-
             if (arrayToSearch is null)
             {
                 throw new ArgumentNullException(nameof(arrayToSearch), "The array to search cannot be null.");
@@ -43,16 +40,14 @@ namespace LookingForArrayElements
                 throw new ArgumentNullException(nameof(ranges), "The ranges cannot be null.");
             }
 
-            if (ranges.Length == 0)
+            if (startIndex < 0)
             {
-                return 0;
+                throw new ArgumentOutOfRangeException(nameof(startIndex), "The start index cannot be negative.");
             }
 
-            // ins
-
-            if (ranges[0] is null)
+            if (startIndex > arrayToSearch.Length)
             {
-                throw new ArgumentNullException(nameof(ranges), "The ranges cannot be null.");
+                throw new ArgumentOutOfRangeException(nameof(startIndex), "startIndex is out of range arrayToSearch.");
             }
 
             if (count < 0)
@@ -60,31 +55,17 @@ namespace LookingForArrayElements
                 throw new ArgumentOutOfRangeException(nameof(count), "The count cannot be negative.");
             }
 
-            if (startIndex > arrayToSearch.Length)
+            foreach (var t in ranges)
             {
-                throw new ArgumentOutOfRangeException(nameof(startIndex), "sdfsdfdsf.");
-            }
+                if (t is null)
+                {
+                    throw new ArgumentNullException(nameof(ranges), "The ranges cannot be null.");
+                }
 
-            if (startIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(startIndex), "The start index cannot be negative.");
-            }
-
-            if (arrayToSearch.Length == 0)
-            {
-                return 0;
-            }
-
-            if (ranges[0].Length != 2)
-            {
-                throw new ArgumentException("The range should have exactly two elements.", nameof(ranges));
-            }
-
-            if (ranges.
-
-            if (ranges[0][0] > ranges[0][1])
-            {
-                throw new ArgumentOutOfRangeException(nameof(ranges), "The first element of the range should be less than or equal to the second element of the range.");
+                if (t.Length != 2 && t.Length != 0)
+                {
+                    throw new ArgumentException(null, nameof(ranges));
+                }
             }
 
             if (count > arrayToSearch.Length - startIndex)
@@ -92,17 +73,33 @@ namespace LookingForArrayElements
                 throw new ArgumentOutOfRangeException(nameof(count), "The count cannot be greater than the length of the array minus the start index.");
             }
 
-            if (count == 0)
+            if (ranges.Length == 0)
             {
                 return 0;
             }
 
-            if (arrayToSearch[startIndex] >= ranges[0][0] && arrayToSearch[startIndex] <= ranges[0][1])
+            if (arrayToSearch.Length == 0)
             {
-                return 1 + GetDecimalsCount(arrayToSearch, ranges, startIndex + 1, count - 1);
+                return 0;
             }
 
-            return GetDecimalsCount(arrayToSearch, ranges, startIndex + 1, count - 1);
+            return GetCountRecursive(arrayToSearch, ranges, startIndex, count, 0, 0);
+        }
+
+        public static int GetIsNumberInRangesRecursive(decimal[] arrayToSearch, decimal[][] ranges, int startIndex, int rangeIndex)
+        {
+            return rangeIndex < ranges.Length && ranges[rangeIndex]?.Length > 0 && arrayToSearch[startIndex] >= ranges[rangeIndex][0] && arrayToSearch[startIndex] <= ranges[rangeIndex][1]
+                ? 1
+                : rangeIndex == ranges.Length - 1
+                    ? 0
+                    : GetIsNumberInRangesRecursive(arrayToSearch, ranges, startIndex, rangeIndex + 1);
+        }
+
+        public static int GetCountRecursive(decimal[] arrayToSearch, decimal[][] ranges, int startIndex, int count, int i, int totalCount)
+        {
+            return count > 0
+                ? GetCountRecursive(arrayToSearch, ranges, startIndex + 1, count - 1, i, totalCount + GetIsNumberInRangesRecursive(arrayToSearch, ranges, startIndex, i))
+                : totalCount;
         }
     }
 }
