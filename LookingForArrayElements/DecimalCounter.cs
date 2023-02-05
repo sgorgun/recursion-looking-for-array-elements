@@ -10,7 +10,7 @@ namespace LookingForArrayElements
         /// <param name="arrayToSearch">One-dimensional, zero-based <see cref="Array"/> of single-precision floating-point numbers.</param>
         /// <param name="ranges">One-dimensional, zero-based <see cref="Array"/> of range arrays.</param>
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
-        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[]?[]? ranges)
+        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[][]? ranges)
         {
             if (arrayToSearch is null)
             {
