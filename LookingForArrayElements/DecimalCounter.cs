@@ -10,7 +10,7 @@ namespace LookingForArrayElements
         /// <param name="arrayToSearch">One-dimensional, zero-based <see cref="Array"/> of single-precision floating-point numbers.</param>
         /// <param name="ranges">One-dimensional, zero-based <see cref="Array"/> of range arrays.</param>
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
-        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[][]? ranges)
+        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[]?[]? ranges)
         {
             if (arrayToSearch is null)
             {
@@ -33,7 +33,7 @@ namespace LookingForArrayElements
         /// <param name="startIndex">The zero-based starting index of the search.</param>
         /// <param name="count">The number of elements in the section to search.</param>
         /// <returns>The number of occurrences of the <see cref="Array"/> elements that match the range criteria.</returns>
-        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[][]? ranges, int startIndex, int count)
+        public static int GetDecimalsCount(decimal[]? arrayToSearch, decimal[]?[]? ranges, int startIndex, int count)
         {
             if (arrayToSearch is null)
             {
@@ -88,7 +88,7 @@ namespace LookingForArrayElements
                 return 0;
             }
 
-            return GetCountRecursive(arrayToSearch, ranges, startIndex, count, 0, 0);
+            return GetCountRecursive(arrayToSearch, ranges!, startIndex, count, 0, 0);
         }
 
         public static int GetIsNumberInRangesRecursive(decimal[] arrayToSearch, decimal[][] ranges, int startIndex, int rangeIndex)
