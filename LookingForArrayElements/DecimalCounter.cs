@@ -69,7 +69,7 @@ namespace LookingForArrayElements
 
                 if (t.Length != 2 && t.Length != 0)
                 {
-                    throw new ArgumentException(null, nameof(ranges));
+                    throw new ArgumentException("Check the ranges.", nameof(ranges));
                 }
             }
 
